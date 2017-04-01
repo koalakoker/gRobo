@@ -33,6 +33,8 @@ private:
     void drawLeg(void);
     void drawLeg(CLeg* l);
 
+    void IK(logicPoint p, CLeg* root, CLeg* child);
+
     widgetPoint toWidgetPoint(logicPoint p);
     logicPoint toLogicPoint(widgetPoint p);
 

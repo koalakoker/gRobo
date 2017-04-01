@@ -83,6 +83,8 @@ void CGraph::drawLeg(void)
     if (m_mousePressed)
     {
         legP = toLogicPoint({m_mouseXPos, m_mouseYPos});
+
+        IK(legP, m_rootLeg, m_childLeg);
     }
 
     widgetPoint widP = toWidgetPoint(legP);
@@ -122,4 +124,16 @@ logicPoint CGraph::toLogicPoint(widgetPoint p)
     retP.x = ((double)(p.x - m_xmid) * m_xMax) / ((double)(rect().width()) / 2.0);
     retP.y = ((double)(m_ymid - p.y) * m_yMax) / ((double)(rect().height()) / 2.0);
     return retP;
+}
+
+void CGraph::IK(logicPoint p, CLeg *root, CLeg *child)
+{
+    double l = sqrt((p.x*p.x)+(p.y*p.y));
+    double l1 = root->lenght;
+    double l2 = child->lenght;
+    double teta = atan2(p.y,p.x);
+    double psi = acos(((l1*l1)+(l*l)-(l2*l2))/(2*l1*l));
+    root->angle = teta - psi;
+    double fi = acos(((l1*l1)+(l2*l2)-(l*l))/(2*l1*l2));
+    child->angle = M_PI-fi;
 }
