@@ -13,10 +13,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        robowin.cpp \
     cgraph.cpp
 
-HEADERS  += robowin.h \
+HEADERS  += \
     cgraph.h
 
-FORMS    += robowin.ui
+FORMS    +=
