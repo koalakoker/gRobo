@@ -13,9 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    cgraph.cpp
+    cgraph.cpp \
+    cleg.cpp
 
 HEADERS  += \
-    cgraph.h
+    cgraph.h \
+    cleg.h
 
 FORMS    +=

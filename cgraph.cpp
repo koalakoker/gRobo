@@ -9,6 +9,9 @@ CGraph::CGraph(QWidget *parent) : QWidget(parent)
 
     m_mousePressed = false;
     legP = {1,1};
+
+    m_rootLeg = new CLeg();
+    m_childLeg = new CLeg(m_rootLeg, 1, 3.14/2.0);
 }
 
 void CGraph::paintEvent(QPaintEvent *)
@@ -84,6 +87,25 @@ void CGraph::drawLeg(void)
 
     widgetPoint widP = toWidgetPoint(legP);
     painter.drawLine(m_xmid, m_ymid, widP.x, widP.y);
+
+    // Draw legs
+    drawLeg(m_rootLeg);
+    drawLeg(m_childLeg);
+}
+
+void CGraph::drawLeg(CLeg* l)
+{
+    QPainter painter(this);
+    QPen pen = QPen(Qt::red);
+    painter.setPen(pen);
+
+    logicPoint orgP = {l->originX(), l->originY()};
+    widgetPoint widOrgP = toWidgetPoint(orgP);
+
+    logicPoint P = {l->x(), l->y()};
+    widgetPoint widP = toWidgetPoint(P);
+
+    painter.drawLine(widOrgP.x, widOrgP.y, widP.x, widP.y);
 }
 
 widgetPoint CGraph::toWidgetPoint(logicPoint p)

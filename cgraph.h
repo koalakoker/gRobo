@@ -2,6 +2,7 @@
 #define CGRAPH_H
 
 #include <QWidget>
+#include "cleg.h"
 
 typedef struct
 {
@@ -30,11 +31,14 @@ private:
     void updateMargins(void);
     void drawAxis(void);
     void drawLeg(void);
+    void drawLeg(CLeg* l);
 
     widgetPoint toWidgetPoint(logicPoint p);
     logicPoint toLogicPoint(widgetPoint p);
 
     logicPoint legP;
+    CLeg* m_rootLeg;
+    CLeg* m_childLeg;
 
     int m_xleft;
     int m_xmid;
