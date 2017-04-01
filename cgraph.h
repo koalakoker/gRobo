@@ -11,7 +11,16 @@ public:
 
 private:
     void paintEvent(QPaintEvent *event);
+    void updateMargins(void);
     void drawAxis(void);
+
+    int m_xleft;
+    int m_xmid;
+    int m_xright;
+
+    int m_ytop;
+    int m_ymid;
+    int m_ybottom;
 
 signals:
 
