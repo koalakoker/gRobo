@@ -3,6 +3,18 @@
 
 #include <QWidget>
 
+typedef struct
+{
+    double x;
+    double y;
+} logicPoint;
+
+typedef struct
+{
+    int x;
+    int y;
+} widgetPoint;
+
 class CGraph : public QWidget
 {
     Q_OBJECT
@@ -11,8 +23,18 @@ public:
 
 private:
     void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+
     void updateMargins(void);
     void drawAxis(void);
+    void drawLeg(void);
+
+    widgetPoint toWidgetPoint(logicPoint p);
+    logicPoint toLogicPoint(widgetPoint p);
+
+    logicPoint legP;
 
     int m_xleft;
     int m_xmid;
@@ -21,6 +43,13 @@ private:
     int m_ytop;
     int m_ymid;
     int m_ybottom;
+
+    double m_xMax;
+    double m_yMax;
+
+    bool m_mousePressed;
+    int m_mouseXPos;
+    int m_mouseYPos;
 
 signals:
 
