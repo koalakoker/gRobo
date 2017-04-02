@@ -12,6 +12,8 @@ CGraph::CGraph(QWidget *parent) : QWidget(parent)
 
     m_rootLeg = new CLeg();
     m_childLeg = new CLeg(m_rootLeg, 1, 3.14/2.0);
+
+    m_mode = 0;
 }
 
 void CGraph::paintEvent(QPaintEvent *)
@@ -28,6 +30,16 @@ void CGraph::mousePressEvent(QMouseEvent *event)
     m_mousePressed = true;
     m_mouseXPos = event->x();
     m_mouseYPos = event->y();
+
+    if (m_mode == 0)
+    {
+        m_mode = 1;
+    }
+    else
+    {
+        m_mode = 0;
+    }
+
     repaint();
 }
 
@@ -88,7 +100,7 @@ void CGraph::drawLeg(void)
     }
 
     widgetPoint widP = toWidgetPoint(legP);
-    painter.drawLine(m_xmid, m_ymid, widP.x, widP.y);
+//    painter.drawLine(m_xmid, m_ymid, widP.x, widP.y);
 
     // Draw legs
     drawLeg(m_rootLeg);
@@ -131,9 +143,23 @@ void CGraph::IK(logicPoint p, CLeg *root, CLeg *child)
     double l = sqrt((p.x*p.x)+(p.y*p.y));
     double l1 = root->lenght;
     double l2 = child->lenght;
+    if (l > (l1 + l2))
+    {
+        l = l1 + l2;
+    }
+
     double teta = atan2(p.y,p.x);
     double psi = acos(((l1*l1)+(l*l)-(l2*l2))/(2*l1*l));
-    root->angle = teta - psi;
     double fi = acos(((l1*l1)+(l2*l2)-(l*l))/(2*l1*l2));
-    child->angle = M_PI-fi;
+
+    if (m_mode == 0)
+    {
+        root->angle = teta - psi;
+        child->angle = M_PI-fi;
+    }
+    else
+    {
+        root->angle = teta + psi;
+        child->angle = fi-M_PI;
+    }
 }

@@ -41,6 +41,7 @@ private:
     logicPoint legP;
     CLeg* m_rootLeg;
     CLeg* m_childLeg;
+    int m_mode;
 
     int m_xleft;
     int m_xmid;
